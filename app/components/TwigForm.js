@@ -2,18 +2,21 @@ var React = require('react');
 var PropTypes = React.PropTypes;
 var stepPadding = require('../styles').stepPadding;
 var buttonPadding = require('../styles').buttonPadding;
-
+var noHeaderMargin =require('../styles').noHeaderMargin;
+var headerPadding =require('../styles').headerPadding;
+var stepHeader =require('../styles').stepHeader;
 
 
 var steps = [];
-function renderSteps (num) {
-    if (num>0){
+function renderSteps (num, func) {
+    if (num>0 && !steps[num-1]){
       steps.push(
         <div style={stepPadding}>
           <input
           className="form-control"
           placeholder={"Step " + num + " Title"}
-          type="text"/>
+          type="text"
+          onChange={func}/>
         <textarea
           className="form-control"
           placeholder={"Step " + num + " Description"}
@@ -23,21 +26,6 @@ function renderSteps (num) {
     }
   return steps;
 }
-
-
-/* <input
-  className="form-control"
-  placeholder="Step 1 Title"
-  onChange={props.onUpdateStep}
-  value={props.StepTitle}
-  type="text"/>
-<input
-  className="form-control"
-  placeholder="Step 1 Description"
-  onChange={props.onUpdateStep}
-  value={props.StepTitle}
-  type="text"/> */
-
 
 // Basic form
 function TwigForm (props) {
@@ -51,11 +39,11 @@ function TwigForm (props) {
           <input
             className="form-control form-control-lg"
             placeholder="Twig Title"
-            onChange={props.onUpdateTitle}
+            onChange={props.onUpdateTwig}
             value={props.twigTitle}
             type="text"/>
           <div className="form-group steps">
-            {renderSteps(props.stepCount.length)}
+            {renderSteps(props.stepCount.length, props.onUpdateTwigContent)}
           </div>
           <div className="form-group col-sm-6 col-sm-offset-3">
             <button
@@ -75,7 +63,9 @@ function TwigForm (props) {
         </form>
       </div>
       <div className="col-sm-6">
-        <p>Steps go here</p>
+        <h2 style={noHeaderMargin}>{props.twigTitle}</h2>
+        <h3 style={stepHeader}>Step 1: {props.twigContent[0].stepTitle}</h3>
+        <p>Enter step here</p>
       </div>
     </div>
   )

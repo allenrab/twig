@@ -3,16 +3,18 @@ var TwigForm = require('../components/TwigForm')
 
 
 var TwigContainer = React.createClass({
-  //You declare this so you can use context later in the code to switch between routers and pass info
-  //Not sure why you can't use Link
-  // contextTypes: {
-  //   router: React.PropTypes.object.isRequired
-  // },
-
   //In getInitialState, you usually pass in empty parameters that hold the state
   getInitialState: function(){
     return {
-        step: []
+        step: [],
+        twigTitle: '',
+        twigContent: [
+          {
+            stepNum: 1,
+            stepTitle: '',
+            active: false
+          }
+        ]
     }
   },
   componentDidMount: function(){
@@ -26,6 +28,25 @@ var TwigContainer = React.createClass({
     steps.push(step);
     this.setState({ step: steps});
   },
+
+  handleUpdateTwig: function(e){
+    this.setState({
+      twigTitle: e.target.value
+    })
+  },
+  handleUpdateTwigContent: function(e){
+    var twigContent = this.state.twigContent;
+    twigContent[0] = {
+      "stepNum": 1,
+      "stepTitle": e.target.value,
+      "active": true
+    };
+    this.setState({
+      twigContent: twigContent
+    });
+    console.log(this.state.twigContent);
+  },
+
   //another custom function we made that gets activated by submitting the button
   handleSubmit: function(e){
     //this prevents the default action of the button (whatever it may be)
@@ -52,6 +73,10 @@ var TwigContainer = React.createClass({
       //twigTitle={this.state.twigTitle}
       addStep={this.addStep}
       stepCount={this.state.step}
+      onUpdateTwig={this.handleUpdateTwig}
+      twigTitle={this.state.twigTitle}
+      onUpdateTwigContent={this.handleUpdateTwigContent}
+      twigContent={this.state.twigContent}
       />
     )
   }
