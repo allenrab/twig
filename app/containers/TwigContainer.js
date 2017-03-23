@@ -40,27 +40,9 @@ var TwigContainer = React.createClass({
 
   addStep: function(e){
     e.preventDefault;
-    alert("Add step here");
     this.appendStep("another step");
-    console.log(this.state.step);
   },
-/*
-    if (this.props.routeParams.playerOne) {
-      // go to /battle
-      this.context.router.push({
-        pathname: '/battle',
-        query: {
-          playerOne: this.props.routeParams.playerOne,
-          playerTwo: this.state.username
-        }
-      })
-    } else {
-      //go to playerTwo
-      //Can push with either an object (above) or a single line (below)
-      this.context.router.push('/playerTwo/' + this.state.username)
-    }
-  },
-*/
+
   render: function(){
     return(
       <TwigForm
@@ -69,6 +51,7 @@ var TwigContainer = React.createClass({
       //header={this.props.route.header}
       //twigTitle={this.state.twigTitle}
       addStep={this.addStep}
+      stepCount={this.state.step}
       />
     )
   }

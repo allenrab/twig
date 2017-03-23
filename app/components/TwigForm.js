@@ -1,30 +1,30 @@
 var React = require('react');
 var PropTypes = React.PropTypes;
 var stepPadding = require('../styles').stepPadding;
+var buttonPadding = require('../styles').buttonPadding;
 
 
-function Step(number, title, description) {
-  this.number = number;
-  this.title = title;
-  this.description = description;
-}
 
 var steps = [];
+function renderSteps (num) {
+    if (num>0){
+      steps.push(
+        <div style={stepPadding}>
+          <input
+          className="form-control"
+          placeholder={"Step " + num + " Title"}
+          type="text"/>
+        <textarea
+          className="form-control"
+          placeholder={"Step " + num + " Description"}
+          type="text"/>
+        </div>
+      )
+    }
+  return steps;
+}
 
-for (var i=0; i<2 ; i++) { //Should change i<2 to i<steps.length, then cut this to Twig Container
-  steps.push(
-    <div>
-      <input
-      className="form-control"
-      placeholder="Step 1 Title"
-      type="text"/>
-    <input
-      className="form-control"
-      placeholder="Step 1 Description"
-      type="text"/>
-    </div>
-  )
-};
+
 /* <input
   className="form-control"
   placeholder="Step 1 Title"
@@ -55,22 +55,27 @@ function TwigForm (props) {
             value={props.twigTitle}
             type="text"/>
           <div className="form-group steps">
-            {steps}
+            {renderSteps(props.stepCount.length)}
           </div>
           <div className="form-group col-sm-6 col-sm-offset-3">
             <button
-              className="btn btn-block btn-secondary"
+              className="btn btn-primary"
               type="button"
-              onClick={props.addStep}>
+              onClick={props.addStep}
+              style={buttonPadding}>
                 Add Step
               </button>
             <button
-              className="btn btn-block btn-success"
-              type="submit">
+              className="btn btn-success"
+              type="submit"
+              style={buttonPadding}>
                 Submit
               </button>
           </div>
         </form>
+      </div>
+      <div className="col-sm-6">
+        <p>Steps go here</p>
       </div>
     </div>
   )
