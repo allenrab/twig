@@ -16,15 +16,31 @@ function renderSteps (num, func) {
           className="form-control"
           placeholder={"Step " + num + " Title"}
           type="text"
+          name={"step-title-" + num}
           onChange={func}/>
         <textarea
           className="form-control"
           placeholder={"Step " + num + " Description"}
-          type="text"/>
+          type="text"
+          name={"step-content-" + num}
+          onChange={func}/>
         </div>
       )
     }
   return steps;
+}
+
+var contents = [];
+function renderContent (arr){
+    contents[arr.length]= (
+      <div>
+        <h3 style={stepHeader}>{"Step " + arr.length + ": " + arr[arr.length-1].stepTitle}</h3>
+        <p>Enter step here</p>
+      </div>
+    )
+
+  console.log(arr[arr.length-1].stepTitle);
+  return contents;
 }
 
 // Basic form
@@ -43,7 +59,7 @@ function TwigForm (props) {
             value={props.twigTitle}
             type="text"/>
           <div className="form-group steps">
-            {renderSteps(props.stepCount.length, props.onUpdateTwigContent)}
+            {renderSteps(props.twigContent.length, props.onUpdateTwigContent)}
           </div>
           <div className="form-group col-sm-6 col-sm-offset-3">
             <button
@@ -64,8 +80,7 @@ function TwigForm (props) {
       </div>
       <div className="col-sm-6">
         <h2 style={noHeaderMargin}>{props.twigTitle}</h2>
-        <h3 style={stepHeader}>Step 1: {props.twigContent[0].stepTitle}</h3>
-        <p>Enter step here</p>
+        {renderContent(props.twigContent)}
       </div>
     </div>
   )
